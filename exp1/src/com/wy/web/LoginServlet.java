@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wy.web.LoginDao;
+import com.wy.web.ManageMySQL8;
 import com.wy.user.UserInfo;
 
 
@@ -52,7 +52,10 @@ public class LoginServlet extends HttpServlet {
 		user.setUserTel(tel); 
 		user.setUserEmail(email);
 		user.setUserAdd(add);
-		boolean flag=LoginDao.getInstance().saveUser(user);
+
+		LoginInfoPost lip=new LoginInfoPost();
+		boolean flag=lip.saveUser(user);
+
 		if(flag){
 			request.getSession().setAttribute("userName", user.getUserName());
 			request.getRequestDispatcher("/login_success.jsp").forward(request, response); 

@@ -7,6 +7,9 @@ import java.util.List;
 
 public class GetProductCountPost {
 
+	public int[] countlist;
+
+	//获取所有分类的总数
 	public int[] GetProductCount(){
 		
 		String sql=null;
@@ -16,7 +19,7 @@ public class GetProductCountPost {
 		searchlist.add("1");
 		ManageMySQL8 conn=new ManageMySQL8();
 		/*List<Integer> countlist=new ArrayList<Integer>();*/
-		int[] countlist=new int[19];
+		countlist=new int[19];
 		
 		//product_type总数(5)
 		for(int i=0;i<5;i++){
@@ -91,5 +94,24 @@ public class GetProductCountPost {
 		
 		conn.close();
 		return countlist;
+	}
+
+	//获取指定分类的总数
+	public int getSingleCount(String flag0,String index){
+		int base=1;
+		int index_int=Integer.parseInt(index);
+		switch(flag0){
+			case "Categories":
+				base=0;
+				break;
+			case "Brands":
+				base=5;
+				break;
+			case "Price":
+				base=5+8;
+				break;
+		}
+		base=base+index_int-1;
+		return base;
 	}
 }

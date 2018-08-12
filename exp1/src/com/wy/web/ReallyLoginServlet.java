@@ -1,24 +1,21 @@
 package com.wy.web;
 
 import java.io.IOException;
-import java.sql.Connection;
 //import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-//import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wy.user.UserInfo;
+
 //import com.wy.web.LoginDao;
 //import com.wy.user.UserInfo;
-import com.wy.web.MySQLDBCon;
+
 
 @WebServlet("/servlet/ReallyLoginServlet")
 public class ReallyLoginServlet extends HttpServlet {
@@ -31,9 +28,8 @@ public class ReallyLoginServlet extends HttpServlet {
 		
 		String name=request.getParameter("name");
 		String pwd=request.getParameter("pwd");
-		//建立PreparedStatement对象
-		Connection conn=null;	
-		conn=MySQLDBCon.getCon();  //建立数据库连接
+
+		ManageMySQL8 conn=new ManageMySQL8();
 		
 		try{
 			//String sql="select * from userinfo where username=? and password=?";
@@ -41,10 +37,9 @@ public class ReallyLoginServlet extends HttpServlet {
 			//PreparedStatement pstmt=conn.prepareStatement(sql);*/
 			String sql="select * from userinfo where username='"+name+"' and password='"+pwd+"'";
 			
-			
 			//PreparedStatement pstmt=conn.prepareStatement(sql);	//创建用户操作执行
-			Statement pstmt=conn.createStatement();
-			ResultSet rs=pstmt.executeQuery(sql);
+
+			ResultSet rs=conn.executeQuery(sql,null);
 			//pstmt.executeUpdate();		//编译执行insert语句
 			boolean flag=rs.next();
 			if(flag){
@@ -95,11 +90,7 @@ public class ReallyLoginServlet extends HttpServlet {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			try{
-				conn.close();
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
+			conn.close();
 		}
 	}
 
