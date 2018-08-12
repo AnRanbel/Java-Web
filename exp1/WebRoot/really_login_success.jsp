@@ -87,13 +87,22 @@
 	function searchInfo() {
 		var url = "http://localhost:8085/exp1/";
 		var inputvalue = $("input[name='search']").val();
-		url = url + "servlet/GetProductInfo?flag=ALL&search=" + inputvalue;
+		url = url + "servlet/GetProductInfo?flag=ALL&search=" + inputvalue+"&page=1";
 		window.location.href = url;
 	}
 </script>
 
-<script type="text/javascript" src="js/login_check.js"></script>
+<script type="text/javascript">
+	//修改信息提交——绑定回车
+	$(document).keydown(function (event) {
+		if(event.keyCode==13){
+			$("#submit_info").click();
+		}
+	});
+</script>
+
 <!-- 检验输入是否正确 -->
+<script type="text/javascript" src="js/login_check.js"></script>
 
 </head>
 <body>
@@ -166,7 +175,7 @@
 		<div class="container">
 			<div class="top-nav">
 				<ul class="memenu skyblue">
-					<li class="active"><a href="servlet/GetProductInfo?flag=ALL">Home</a></li>
+					<li class="active"><a href="servlet/GetProductInfo?flag=ALL&page=1">Home</a></li>
 					<li class="grid"><a href="#">News</a></li>
 					<li class="grid"><a href="#">China League</a>
 						<div class="mepanel" style="left:38.5%">
@@ -216,7 +225,7 @@
 	<div class="account">
 		<div class="container">
 			<div class="account-bottom">
-				<form action="servlet/ReviseUserInfo" method="post">
+				<form action="servlet/ReviseUserInfo" method="post" id="reviseinfoform">
 					<div class="col-md-6 account-left">
 						<div class="account-top heading">
 							<h3>
@@ -387,10 +396,21 @@
 	<!-- 确认提交提示框 -->
 	<script type="text/javascript">
 		$("#submit_info").click(function(){
-			if(confirm("Comfirm modification?")){
-				return true;
-			}else{
-				return false;
+		    if($(this).attr("disabled")!="disabled"){
+                if(confirm("Comfirm modification?")){
+                    if($("#usernameError").is(':visible')||$("#passwordError").is(':visible')||$("#confirm-passwordError").is(':visible')||$("#telephoneError").is(':visible')||$("#emailError").is(':visible')){
+                        alert("请先正确填写信息.");
+                        return false;
+                    }else if($("#usernameRight").is(':hidden')||$("#passwordRight").is('hidden')||$("#confirm-passwordRight").is('hidden')||$("#telephoneRight").is('hidden')||$("#emailRight").is('hidden')){
+                        alert("请先填写信息(*星号为必填项).");
+                        return false;
+                    } else{
+                        return true;
+                    }
+                    //return true;
+                }else{
+                    return false;
+                }
 			}
 		});
 	</script>

@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			function searchInfo(){		
 				var url="http://localhost:8085/exp1/";
 				var inputvalue=$("input[name='search']").val();
-				url=url+"servlet/GetProductInfo?flag=ALL&search="+inputvalue;
+				url=url+"servlet/GetProductInfo?flag=ALL&search="+inputvalue+"&page=1";
 				window.location.href=url;
 			}
 		</script>
@@ -140,7 +140,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="container">
 			<div class="top-nav">
 				<ul class="memenu skyblue">
-					<li class="active"><a href="servlet/GetProductInfo?flag=ALL">Home</a></li>
+					<li class="active"><a href="servlet/GetProductInfo?flag=ALL&page=1">Home</a></li>
 					<li class="grid"><a href="#">News</a></li>
 					<li class="grid"><a href="#">China League</a>
 						<div class="mepanel" style="left:38.5%">

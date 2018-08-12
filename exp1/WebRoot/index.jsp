@@ -43,10 +43,42 @@
 		if($("#usernameError").is(':visible')||$("#passwordError").is(':visible')||$("#confirm-passwordError").is(':visible')||$("#telephoneError").is(':visible')||$("#emailError").is(':visible')){
 			alert("请先正确填写信息.");
 			return false;
-		}else{
+		}else if($("#usernameRight").is(':hidden')||$("#passwordRight").is('hidden')||$("#confirm-passwordRight").is('hidden')||$("#telephoneRight").is('hidden')||$("#emailRight").is('hidden')){
+            alert("请先填写信息(*星号为必填项).");
+            return false;
+		} else{
 			return true;
 		}
 	}
+</script>
+
+<script type="text/javascript">
+	function isLogin(){
+	    if($("#login_username").val()==""||$("#login_password").val()==""){
+            alert("请先填写信息.");
+            return false;
+		}else{
+	        return true;
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	//登录——绑定回车
+    $(document).keydown(function (event) {
+        if(event.keyCode==13){
+            $("#myloginform").submit();
+        }
+    });
+</script>
+
+<script type="text/javascript">
+	//注册——绑定回车
+	$(document).keydown(function (event) {
+		if (event.keyCode == 13) {
+			$("#myform").submit();
+		}
+	});
 </script>
 
 </head>
@@ -56,8 +88,6 @@
 	<div class="gtco-loader"></div>
 
 	<div id="page">
-
-
 		<div class="page-inner">
 			<nav class="gtco-nav" role="navigation">
 			<div class="gtco-container">
@@ -78,7 +108,7 @@
 									<li><a href="#">Beach Volleyball</a></li>
 									<li><a href="#">Mass Volleyball</a></li>
 								</ul></li>
-							<li><a href="servlet/GetProductInfo?flag=ALL">Product</a></li>
+							<li><a href="servlet/GetProductInfo?flag=ALL&page=1">Product</a></li>
 							<li><a href="#">Contact</a></li>
 							<li class="btn-cta"><a href="video.jsp"><span>video</span></a></li>
 						</ul>
@@ -193,7 +223,7 @@
 														<div class="col-md-12">
 															<label for="sex">Sex</label>
 															<div class="sex_input">
-																<input type="radio" name="sex" value="Male" title="sex" />Male
+																<input type="radio" id="sex" name="sex" value="Male" title="sex" />Male
 															</div>
 															<div class="sex_input">
 																<input type="radio" name="sex" value="Female"
@@ -213,7 +243,7 @@
 
 													<div class="row form-group" style="margin-bottom:0px">
 														<div class="col-md-12">
-															<input type="submit" class="btn btn-primary"
+															<input type="submit" id="signup_button" class="btn btn-primary"
 																value="Sign up">
 														</div>
 													</div>
@@ -222,7 +252,7 @@
 
 											<div class="tab-content-inner" data-content="login">
 												<form action="servlet/ReallyLoginServlet" method="post"
-													id="myloginform" >
+													id="myloginform" onsubmit="return isLogin();">
 													<div class="row form-group">
 														<div class="col-md-12">
 															<label for="username">Username or Email</label>
@@ -244,7 +274,7 @@
 
 													<div class="row form-group" style="margin-bottom:0px">
 														<div class="col-md-12">
-															<input type="submit" class="btn btn-primary"
+															<input type="submit" id="login_button" class="btn btn-primary"
 																value="Login">
 														</div>
 													</div>
@@ -256,7 +286,6 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
